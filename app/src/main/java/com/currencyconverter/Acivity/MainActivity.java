@@ -48,17 +48,20 @@ public class MainActivity extends AppCompatActivity {
         });
         currencyViewModal = new ViewModelProvider(this).get(CurrencyViewModal.class);
         currencyViewModal.GetCurrencyRate();
+
         currencyViewModal.getConversionRate().observe(this, list -> {
             conversionRatesList.clear();
-            conversionRatesList.addAll(list);
-            ArrayAdapter<ConversionRates> arrayAdapter1 = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_spinner_dropdown_item, list);
-            arrayAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            binding.sourceCurrencyText.setAdapter(arrayAdapter1);
-            binding.sourceCurrencyText.setText(list.get(0).getCurrencyCode(), false);
-            ArrayAdapter<ConversionRates> arrayAdapter2 = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_spinner_dropdown_item, list);
-            arrayAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            binding.targetCurrencyText.setAdapter(arrayAdapter2);
-            binding.targetCurrencyText.setText("INR", false);
+            if(!list.isEmpty()){
+                conversionRatesList.addAll(list);
+                ArrayAdapter<ConversionRates> arrayAdapter1 = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_spinner_dropdown_item, list);
+                arrayAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                binding.sourceCurrencyText.setAdapter(arrayAdapter1);
+                binding.sourceCurrencyText.setText(list.get(0).getCurrencyCode(), false);
+                ArrayAdapter<ConversionRates> arrayAdapter2 = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_spinner_dropdown_item, list);
+                arrayAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                binding.targetCurrencyText.setAdapter(arrayAdapter2);
+                binding.targetCurrencyText.setText("INR", false);
+            }
         });
         binding.txtamount.addTextChangedListener(new TextWatcher() {
             @Override
